@@ -3,12 +3,18 @@
 namespace App\Controller;
 
 use App\Service\BoutiqueService;
+use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class BoutiqueController extends AbstractController
 {
+    private BoutiqueService $boutique;
+    public function __construct(BoutiqueService $boutique)
+    {
+        $this->boutique = $boutique;
+    }
     #[Route(
         path:'boutique',
         name: 'app_boutique_index',
@@ -29,8 +35,11 @@ final class BoutiqueController extends AbstractController
     )]
     public function rayon(int $idCategorie): Response
     {
+        $categorie = $this->boutique->findCategorieById($idCategorie);
+        $produits = $this->boutique->findProduitsByCategorie($idCategorie);
         return $this->render('boutique/rayon.html.twig', [
-            'categories' => $idCategorie,
+            'categorie' => $categorie,
+            'produits' => $produits,
         ]);
     }
 }
