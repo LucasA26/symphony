@@ -4,16 +4,33 @@
 
 {% block body %}
 
-    <div class="example-wrapper">
-
-        This friendly message is coming from:
-        <ul>
-            <li>{{ categorie.libelle }}</li>
+    <div class="card col-md-6 offset-3">
+        <div class="card-header">
+            <a class="btn-back text-secondary" href="/boutique">
+                <i class="fas fa-2x fa-arrow-circle-left"></i>
+            </a>
+            <h3>
+                <i class="fas fa-store"></i>
+                Boutique	{{ produits|length }}	fruit(s) proposé(s) 	</h3>
+        </div>
+        <div class="card-body">
             {% for produit in produits %}
-                <li>{{ produit.libelle }}</li>
-            {% else %}
-                <li>Aucun produit dans cette catégorie.</li>
+                <div class="card clickable" onclick="window.open('/boutique/rayon/{{ categorie.id }}','_blank')">
+                    <img src="http://localhost:8000/{{ produit.visuel}}" class="card-img" alt="logo {{ produit.libelle }}">
+                    <div class="card-body">
+                        <h1 class="card-title">
+                            {{ produit.libelle }}</h1>
+                        <p> {{ produit.texte }} </p>
+                        <span class="badge badge-primary">
+                            <i class="fas fa-cart-plus"></i>
+                            {{ produit.prix }}
+                        </span>
+                    </div>
+                </div>
+
             {% endfor %}
-        </ul>
+
+        </div>
     </div>
+
 {% endblock %}
