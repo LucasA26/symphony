@@ -7,7 +7,7 @@
 
     <div class="card col-md-6 offset-3">
         <div class="card-header">
-            <a class="btn-back text-secondary" href="/">
+            <a class="btn-back text-secondary" href='{{ path('app_default_index') }}'>
                 <i class="fas fa-2x fa-arrow-circle-left"></i>
             </a>
             <h3>
@@ -16,8 +16,8 @@
         </div>
         <div class="card-body">
                 {% for item in categories %}
-                    <div class="card clickable" onclick="window.open('/boutique/rayon/{{ item.id }}','_self')">
-                        <img src="{{ item.visuel}}" class="card-img" alt="logo {{ item.libelle }}">
+                    <div class="card clickable" onclick="location = '{{ path('app_boutique_rayon',{'idCategorie':item.id}) }}'">
+                        <img src="http://localhost:8000/{{ item.visuel}}" class="card-img" alt="logo {{ item.libelle }}">
                         <div class="card-body">
                             <h1 class="card-title">
                                 {{ item.libelle }}</h1>

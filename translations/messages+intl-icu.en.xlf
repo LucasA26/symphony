@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="ioM245O" resname="boutique.rayon.prix">
+        <source>boutique.rayon.prix</source>
+        <target>__boutique.rayon.prix</target>
+      </trans-unit>
+      <trans-unit id="qGNkeNS" resname="default.index.magasin">
+        <source>default.index.magasin</source>
+        <target>R4.01 Store</target>
+      </trans-unit>
+      <trans-unit id="eTuB7JT" resname="default.index.phrase_pour_apprendre">
+        <source>default.index.phrase_pour_apprendre</source>
+        <target>Nothing to trade, we just want to learn...</target>
+      </trans-unit>
+      <trans-unit id="1DSOiem" resname="default.contact.phrase_contact">
+        <source>default.contact.phrase_contact</source>
+        <target> Stay in touch </target>
+      </trans-unit>
+      <trans-unit id="kuhtb5p" resname="navbar.boutique">
+        <source>navbar.boutique</source>
+        <target>Store</target>
+      </trans-unit>
+      <trans-unit id="nCSBDIb" resname="navbar.contact">
+        <source>navbar.contact</source>
+        <target>Contact</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

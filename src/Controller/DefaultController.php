@@ -13,8 +13,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class DefaultController extends AbstractController
 {
     #[Route(
-        path: '', // L'URL auquel répondra cette action sera donc /
+        path: '/{_locale}', // L'URL auquel répondra cette action sera donc /
         name: 'app_default_index',
+        requirements: ['_locale' => 'fr|en'],
+        defaults: ['_locale' => 'fr']
     )]
     public function index(): Response
     {
@@ -44,8 +46,9 @@ class DefaultController extends AbstractController
     // TODO : route et contrôleur de la page de contact
 
     #[Route(
-        path: 'contact',
+        path: '/{_locale}/contact',
         name: 'app_default_contact',
+        requirements: ['_locale' => '%app.supported_locales%']
     )]
      public function contact(): Response
      {

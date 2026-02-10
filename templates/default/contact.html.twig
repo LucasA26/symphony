@@ -9,12 +9,13 @@
 {% block body %}
      <div class="card col-md-6 offset-3">
          <div class="card-header">
-             <a class="btn-back text-secondary" href="/">
+             <a class="btn-back text-secondary" href='{{ path('app_default_index') }}'>
              <i class="fas fa-2x fa-arrow-circle-left"></i>
              </a>
              <h3>
                  <i class="fas fa-comments"></i>
-                 Garder le contact			</h3>
+                 {% trans %} default.contact.phrase_contact {% endtrans %}
+             </h3>
          </div>
          <div class="card-body">
              <div class="card clickable" onclick="window.open('https://iut2.univ-grenoble-alpes.fr/l-iut2/qui-sommes-nous-/les-departements-de-l-iut2/informatique-info--149104.kjsp','_blank')">

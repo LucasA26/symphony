@@ -16,8 +16,9 @@ final class BoutiqueController extends AbstractController
         $this->boutique = $boutique;
     }
     #[Route(
-        path:'boutique',
+        path:'/{_locale}/boutique',
         name: 'app_boutique_index',
+        requirements: ['_locale' => '%app.supported_locales%']
     )]
     public function index(BoutiqueService $boutique): Response
     {
@@ -30,8 +31,9 @@ final class BoutiqueController extends AbstractController
 
 
     #[Route(
-        path:'boutique/rayon/{idCategorie}',
+        path:'/{_locale}/boutique/rayon/{idCategorie}',
         name: 'app_boutique_rayon',
+        requirements: ['_locale' => '%app.supported_locales%']
     )]
     public function rayon(int $idCategorie): Response
     {
