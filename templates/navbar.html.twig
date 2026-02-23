@@ -25,12 +25,23 @@
 		</ul>
 		<!-- Début champ de recherche -->
 		{# TODO #}
-		<!-- Fin champ de recherche -->
+        <input type="text" name="search" placeholder="Rechercher..." size="20" maxlength="50">
+        <!-- Fin champ de recherche -->
 		<!-- Début menu des monnaies -->
 		{# TODO #}
 		<!-- Fin menu des monnaies -->
 		<!-- Début menu des langues -->
 		{# TODO #}
+        <select onchange="window.location.href=this.value">
+            {% set locale = app.request.attributes.get('_locale') %}
+            {% set route = app.request.attributes.get('_route') %}
+            {% set params = app.request.attributes.get('_route_params') %}
+
+            {% for uneLocale in supported_locales | split('|') %}
+                {% set params = params | merge({'_locale': uneLocale }) %}
+            <option value="{{ path(route, params) }}" {% if uneLocale == locale %} selected{% endif %}>{{ uneLocale }} </option>
+            {% endfor %}
+        </select>
 		<!-- Fin Menu des langues -->
 	</div>
 </nav>
