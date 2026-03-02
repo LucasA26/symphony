@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+
+    <h1>Mon panier</h1>
+
+    {% for item in panier %}
+        <div>
+
+            <h3>{{ item.produit.libelle }}</h3>
+            <p>Prix : {{ item.produit.prix }} €</p>
+            <p>Quantité : {{ item.quantite }}</p>
+
+            {# ajouter #}
+            <a href="{{ path('app_panier_ajouter', {
+                idProduit: item.produit.id,
+                quantite: 1
+            }) }}">
+                <i class="fas fa-plus"></i>
+            </a>
+
+            {# enlever #}
+            <a href="{{ path('app_panier_enlever', {
+                idProduit: item.produit.id,
+                quantite: 1
+            }) }}">
+                <i class="fas fa-minus"></i>
+            </a>
+
+            {# supprimer #}
+            <a href="{{ path('app_panier_supprimer', {
+                idProduit: item.produit.id
+            }) }}">
+                <i class="fas fa-trash"></i>
+            </a>
+
+        </div>
+    {% endfor %}
+
+    <hr>
+
+    <h2>Total : {{ total }} €</h2>
+
+    <a href="{{ path('app_panier_vider', {
+        _locale: app.request.locale
+    }) }}">
+        <i class="fas fa-trash"></i> Vider le panier
+    </a>
+
+{% endblock %}
