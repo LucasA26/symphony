@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use http\Env\Response;
 
 /**
  * @extends ServiceEntityRepository<Categorie>
@@ -40,4 +41,14 @@ class CategorieRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllCategories(CategorieRepository $cat): array
+    {
+        return $cat->findAll();
+    }
+
+    public function findCategorieById(CategorieRepository $cat, int $idCategorie): ?object
+    {
+        return $cat->find($idCategorie);
+    }
 }
