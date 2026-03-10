@@ -21,8 +21,26 @@
                     {% trans %} navbar.contact {% endtrans %}
 				</a>
 			</li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path("app_panier_index") }}">
+                    <i class="fas fa-shopping-cart"> Produits</i>
+
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownUsager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fas fa-user"></i>Usager
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownUsager">
+                    <a class="dropdown-item" href="{{ path('app_usager_new') }}">Inscription</a>
+                    <a class="dropdown-item" href="{{ path('app_usager_index') }}">Accueil</a>
+                </div>
+            </li>
 			{# TODO : ajouter au fil des TPs les autres éléments du menu #}
 		</ul>
+
 		<!-- Début champ de recherche -->
 		{# TODO #}
         <input type="text" name="search" placeholder="Rechercher..." size="20" maxlength="50">

@@ -1,6 +1,8 @@
 <?php
 namespace App\Service;
 
+use App\Entity\Commande;
+use App\Entity\Usager;
 use Symfony\Component\HttpFoundation\RequestStack;
 use App\Service\BoutiqueService;
 
@@ -104,4 +106,7 @@ class PanierService
         return $contenu;
     }
 
+    public function panierToCommande(Usager $usager) : ?Commande {
+
+    }
 }

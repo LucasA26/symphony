@@ -37,7 +37,7 @@ final class BoutiqueController extends AbstractController
         // $produits = $categorieRepository->findProduitsByCategorie($idCategorie);
         return $this->render('boutique/rayon.html.twig', [
             'categorie' => $categorie,
-            'produits' => $produits,
+          //  'produits' => $produits,
         ]);
     }
 }
