@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Usager;
 use App\Service\PanierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,4 +72,25 @@ final class PanierController extends AbstractController
         $panier->vider();
         return $this->redirectToRoute('app_panier_index');
     }
+
+    #[Route(
+        path: '{_locale}/panier/commander',
+        name: 'app_panier_commander',
+        requirements: ['_locale' => '%app.supported_locales%']
+    )]
+    public function commander(PanierService $panier): Response
+    {
+        $usager = new Usager();
+        $user = $this->getUser();
+        $usager->setRoles($user->getRoles());
+        $commande = $panier->panierToCommande($usager);
+        return $this->render('panier/commande.html.twig', [
+            'prenom' => $usager->getPrenom(),
+            'nom' => $usager->getNom(),
+            'numCmd' => $commande->getId(),
+            'dateCmd' => $commande->getDateCreation()
+        ]);
+    }
+
+
 }

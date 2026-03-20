@@ -2,7 +2,9 @@
 namespace App\Service;
 
 use App\Entity\Commande;
+use App\Entity\LigneCommande;
 use App\Entity\Usager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use App\Service\BoutiqueService;
 
@@ -14,16 +16,18 @@ class PanierService
     private $boutique;  // Le service boutique
     private $panier;    // Tableau associatif, la clé est un idProduit, la valeur associée est une quantité
                         //   donc $this->panier[$idProduit] = quantité du produit dont l'id = $idProduit
+    private EntityManagerInterface $em;
     const PANIER_SESSION = 'panier'; // Le nom de la variable de session pour faire persister $this->panier
 
     // Constructeur du service
-    public function __construct(RequestStack $requestStack, BoutiqueService $boutique)
+    public function __construct(RequestStack $requestStack, BoutiqueService $boutique, EntityManagerInterface $em)
     {
         // Récupération des services session et BoutiqueService
         $this->boutique = $boutique;
         $this->session = $requestStack->getSession();
         // Récupération du panier en session s'il existe, init. à vide sinon
         $this->panier = $this->session->get(self::PANIER_SESSION, []);
+        $this->em = $em;
     }
 
     // Renvoie le montant total du panier
@@ -107,6 +111,29 @@ class PanierService
     }
 
     public function panierToCommande(Usager $usager) : ?Commande {
+        $commande = $this->getContenu();
+
+        if (empty($commande)) {
+            return null;
+        }
+
+        $commande = new Commande();
+        $commande->setUsager($usager);
+        $commande->setDateCreation(new \DateTime());
+        $commande->setValidation(false);
+
+         $this->em->persist($commande);
+        foreach ($commande as $item) {
+            $ligneCommande = new LigneCommande();
+            $ligneCommande->setCommande($commande);
+            $ligneCommande->setProduit($item["produit"]);
+            $ligneCommande->setQuantite($item["quantite"]);
+            $ligneCommande->setPrix($item["prix"]);
+            $this->em->persist($ligneCommande);
+        }
+        $this->em->flush();
+        $this->vider();
+        return $commande;
 
     }
 }
