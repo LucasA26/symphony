@@ -24,20 +24,28 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ path("app_panier_index") }}">
-                    <i class="fas fa-shopping-cart"> Produits</i>
+                    <i class="fas fa-shopping-cart"></i> Produits
 
                 </a>
             </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownUsager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <i class="fas fa-user"></i>Usager
+                    {% if app.user %}
+                        <i class="fas fa-user"></i> {{ app.user.prenom }}
+                    {% else %}
+                        <i class="fas fa-user"></i>Usager
+                    {% endif %}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownUsager">
-                    <a class="dropdown-item" href="{{ path('app_usager_new') }}">Inscription</a>
-                    <a class="dropdown-item" href="{{ path('app_login') }}">Authentification</a>
-                    <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
-                    <a class="dropdown-item" href="{{ path('app_usager_index') }}">Accueil</a>
+                    {% if not is_granted('ROLE_CLIENT') %}
+                        <a class="dropdown-item" href="{{ path('app_usager_new') }}">Inscription</a>
+                        <a class="dropdown-item" href="{{ path('app_login') }}">Authentification</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_CLIENT') %}
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+                        <a class="dropdown-item" href="{{ path('app_usager_index') }}">Accueil</a>
+                    {% endif %}
                 </div>
             </li>
 			{# TODO : ajouter au fil des TPs les autres éléments du menu #}
@@ -45,23 +53,27 @@
 
 		<!-- Début champ de recherche -->
 		{# TODO #}
-        <input type="text" name="search" placeholder="Rechercher..." size="20" maxlength="50">
+        <label>
+            <input type="text" name="search" placeholder="Rechercher..." size="20" maxlength="50">
+        </label>
         <!-- Fin champ de recherche -->
 		<!-- Début menu des monnaies -->
 		{# TODO #}
 		<!-- Fin menu des monnaies -->
 		<!-- Début menu des langues -->
 		{# TODO #}
-        <select onchange="window.location.href=this.value">
-            {% set locale = app.request.attributes.get('_locale') %}
-            {% set route = app.request.attributes.get('_route') %}
-            {% set params = app.request.attributes.get('_route_params') %}
+        <label>
+            <select onchange="window.location.href=this.value">
+                {% set locale = app.request.attributes.get('_locale') %}
+                {% set route = app.request.attributes.get('_route') %}
+                {% set params = app.request.attributes.get('_route_params') %}
 
-            {% for uneLocale in supported_locales | split('|') %}
-                {% set params = params | merge({'_locale': uneLocale }) %}
-            <option value="{{ path(route, params) }}" {% if uneLocale == locale %} selected{% endif %}>{{ uneLocale }} </option>
-            {% endfor %}
-        </select>
-		<!-- Fin Menu des langues -->
+                {% for uneLocale in supported_locales | split('|') %}
+                    {% set params = params | merge({'_locale': uneLocale }) %}
+                <option value="{{ path(route, params) }}" {% if uneLocale == locale %} selected{% endif %}>{{ uneLocale }} </option>
+                {% endfor %}
+            </select>
+        </label>
+        <!-- Fin Menu des langues -->
 	</div>
 </nav>

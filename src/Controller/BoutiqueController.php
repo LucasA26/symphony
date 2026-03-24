@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
+use App\Repository\ProduitRepository;
 use App\Service\BoutiqueService;
 use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,13 +32,13 @@ final class BoutiqueController extends AbstractController
         name: 'app_boutique_rayon',
         requirements: ['_locale' => '%app.supported_locales%']
     )]
-    public function rayon(CategorieRepository $categorieRepository, int $idCategorie): Response
+    public function rayon(CategorieRepository $categorieRepository, int $idCategorie, ProduitRepository $produitRepository): Response
     {
         $categorie = $categorieRepository->findCategorieById($categorieRepository, $idCategorie);
-        // $produits = $categorieRepository->findProduitsByCategorie($idCategorie);
+         $produits = $produitRepository->findBy(['categorie' => $categorie]);
         return $this->render('boutique/rayon.html.twig', [
             'categorie' => $categorie,
-          //  'produits' => $produits,
+           'produits' => $produits,
         ]);
     }
 }

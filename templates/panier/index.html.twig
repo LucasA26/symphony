@@ -9,9 +9,17 @@
     {% for item in panier %}
         <div>
 
+            {% if item != 0 %}
+                <a class="btn btn-primary" href="{{ path('app_panier_commander') }}">
+                    Passer la commande
+                </a>
+            {% endif %}
+
             <h3>{{ item.produit.libelle }}</h3>
             <p>Prix : {{ item.produit.prix }} €</p>
             <p>Quantité : {{ item.quantite }}</p>
+
+
 
             {# ajouter #}
             <a href="{{ path('app_panier_ajouter', {

@@ -51,4 +51,5 @@ class CategorieRepository extends ServiceEntityRepository
     {
         return $cat->find($idCategorie);
     }
+
 }

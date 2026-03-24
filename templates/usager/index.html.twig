@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container mt-4">
         <h1>Mon Espace Client</h1>
-        {% if usagers %}
+        {% if app.user %}
             <div class="alert alert-success">
                 <p>Bonjour {{ usagers.prenom }} {{ usagers.nom }}</p>
             </div>

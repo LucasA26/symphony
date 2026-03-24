@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="card col-md-6 offset-3">
+    <div class="card col-md-12">
         <div class="card-header">
             <a class="btn-back text-secondary" href='{{ path('app_boutique_index') }}'>
                 <i class="fas fa-2x fa-arrow-circle-left"></i>
@@ -13,7 +13,7 @@
                 <i class="fas fa-store"></i>
                 Boutique	{{ produits|length }}	fruit(s) proposé(s) 	</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body row">
             {% for produit in produits %}
                 <div class="card clickable" onclick="location = '{{ path('app_panier_ajouter',{'idProduit':produit.id, 'quantite':1}) }}'">
                     <img src="http://localhost:8000/{{ produit.visuel}}" class="card-img" alt="logo {{ produit.libelle }}">
