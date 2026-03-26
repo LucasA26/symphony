@@ -40,4 +40,13 @@ class ProduitRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findByLibelleOrTexte(string $recherche)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.libelle LIKE :search')
+            ->orWhere('p.texte LIKE :search')
+            ->setParameter('search', '%' . $recherche . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }
