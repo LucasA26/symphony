@@ -55,7 +55,17 @@
             }
 		</script>
 		<!-- debut du block js spécifique -->
-		{% block js %}{%  endblock %}
+        {% block js %}
+            <script>
+                document.getElementById('btnRecherche').addEventListener('click', function() {
+                    const recherche = document.getElementById('champRecherche').value;
+                    if (recherche.trim() !== '') {
+                        const baseUrl = "{{ path('app_boutique_chercher') }}";
+                        window.location.href = baseUrl + '/' + encodeURIComponent(recherche);
+                    }
+                });
+            </script>
+        {% endblock %}
 		<!-- fin du block js spécifique -->
 	</body>
 </html>
