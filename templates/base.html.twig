@@ -39,7 +39,14 @@
 					</div>
 				</div>
 			</div>
-		</main>
+
+            <div id="sidebar">
+                {{ render(controller(
+                    'App\\Controller\\SideBarController::topVentes'
+                )) }}
+            </div>
+
+        </main>
 		<!-- JS : JQuery, Bootstrap -->
 		<script src="{{ asset('js/jquery-3/jquery.slim.min.js') }}"></script>
 		<script src="{{ asset('js/bootstrap-4/bootstrap.bundle.min.js') }}"></script>

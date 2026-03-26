@@ -4,9 +4,9 @@ namespace App\Service;
 use App\Entity\Commande;
 use App\Entity\LigneCommande;
 use App\Entity\Usager;
+use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use App\Service\BoutiqueService;
 
 // Service pour manipuler le panier et le stocker en session
 class PanierService
@@ -14,19 +14,19 @@ class PanierService
     ////////////////////////////////////////////////////////////////////////////
     private $session;   // Le service session
     private $boutique;  // Le service boutique
-    private $panier;    // Tableau associatif, la clé est un idProduit, la valeur associée est une quantité
+    private $panier;// Tableau associatif, la clé est un idProduit, la valeur associée est une quantité
                         //   donc $this->panier[$idProduit] = quantité du produit dont l'id = $idProduit
+    private ProduitRepository $produitRepository;
     private EntityManagerInterface $em;
     const PANIER_SESSION = 'panier'; // Le nom de la variable de session pour faire persister $this->panier
 
     // Constructeur du service
-    public function __construct(RequestStack $requestStack, BoutiqueService $boutique, EntityManagerInterface $em)
+    public function __construct(RequestStack $requestStack, ProduitRepository $produitRepository, EntityManagerInterface $em)
     {
-        // Récupération des services session et BoutiqueService
-        $this->boutique = $boutique;
+
         $this->session = $requestStack->getSession();
-        // Récupération du panier en session s'il existe, init. à vide sinon
         $this->panier = $this->session->get(self::PANIER_SESSION, []);
+        $this->produitRepository = $produitRepository;
         $this->em = $em;
     }
 
@@ -35,11 +35,11 @@ class PanierService
     {
       $somme = 0;
       foreach ($this->panier as $idProduit => $quantite) {
-          $produit = $this->boutique->findProduitById($idProduit);
+          $produit = $this->produitRepository->find($idProduit);
           if ($produit === null) {
               continue;
           }
-          $somme += $produit->prix * $quantite;
+          $somme += $produit->getPrix() * $quantite;
       }
       return $somme;
     }
@@ -48,7 +48,7 @@ class PanierService
     public function getNombreProduits() : int
     {
       $nbProduits = 0;
-      foreach ($this->panier as $idProduit => $quantite) {
+      foreach ($this->panier as $quantite) {
           $nbProduits += $quantite;
       }
       return $nbProduits;
@@ -98,7 +98,7 @@ class PanierService
     {
         $contenu = [];
         foreach ($this->panier as $idProduit => $quantite) {
-            $produit = $this->boutique->findProduitById($idProduit);
+            $produit = $this->produitRepository->find($idProduit);
             if ($produit === null) {
                 continue;
             }
@@ -109,6 +109,18 @@ class PanierService
         }
         return $contenu;
     }
+
+    public function getNbProduits(): int
+    {
+        $nb = 0;
+
+        foreach ($this->panier as $quantite) {
+            $nb += $quantite;
+        }
+
+        return $nb;
+    }
+
 
     public function panierToCommande(Usager $usager) : ?Commande {
         $commande = $this->getContenu();

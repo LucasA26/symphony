@@ -13,12 +13,20 @@
                 <a class="btn btn-primary" href="{{ path('app_panier_commander') }}">
                     Passer la commande
                 </a>
+            {% else %}
+                <p>Ton panier est vide !</p>
+                <p>Voudrais-tu briser notre petit cœur fragile de commerçant ?</p>
+                <div style="font-size: 40px; color: #e25555;">💔</div>
             {% endif %}
 
-            <h3>{{ item.produit.libelle }}</h3>
-            <p>Prix : {{ item.produit.prix }} €</p>
-            <p>Quantité : {{ item.quantite }}</p>
 
+            <ul>
+                {% for i in item %}
+                    <li>{{ i.libelle }} — {{ i.quantite }} × {{ i.prix }} €</li>
+                {% endfor %}
+            </ul>
+
+            <p>Total : {{ total }} €</p>
 
 
             {# ajouter #}
@@ -48,8 +56,6 @@
     {% endfor %}
 
     <hr>
-
-    <h2>Total : {{ total }} €</h2>
 
     <a href="{{ path('app_panier_vider', {
         _locale: app.request.locale

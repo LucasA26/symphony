@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Usager;
 use App\Service\PanierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PanierController extends AbstractController
 {
     #[Route(
-        path: '{_locale}/panier',
+        path: '/{_locale}/panier',
         name: 'app_panier_index',
         requirements: ['_locale' => '%app.supported_locales%']
     )]
@@ -25,7 +24,7 @@ final class PanierController extends AbstractController
 
 
     #[Route(
-        path: '{_locale}/panier/ajouter/{idProduit}/{quantite}',
+        path: '/{_locale}/panier/ajouter/{idProduit}/{quantite}',
         name: 'app_panier_ajouter',
         requirements: ['_locale' => '%app.supported_locales%']
     )]
@@ -37,7 +36,7 @@ final class PanierController extends AbstractController
 
 
     #[Route(
-        path: '{_locale}/panier/enlever/{idProduit}/{quantite}',
+        path: '/{_locale}/panier/enlever/{idProduit}/{quantite}',
         name: 'app_panier_enlever',
         requirements: ['_locale' => '%app.supported_locales%']
     )]
@@ -50,7 +49,7 @@ final class PanierController extends AbstractController
 
 
     #[Route(
-        path: '{_locale}/panier/supprimer/{idProduit}',
+        path: '/{_locale}/panier/supprimer/{idProduit}',
         name: 'app_panier_supprimer',
         requirements: ['_locale' => '%app.supported_locales%']
     )]
@@ -63,7 +62,7 @@ final class PanierController extends AbstractController
 
 
     #[Route(
-        path: '{_locale}/panier/vider',
+        path: '/{_locale}/panier/vider',
         name: 'app_panier_vider',
         requirements: ['_locale' => '%app.supported_locales%']
     )]
@@ -73,20 +72,27 @@ final class PanierController extends AbstractController
         return $this->redirectToRoute('app_panier_index');
     }
 
+
+
+    public function nombreProduits(PanierService $panier): Response
+    {
+        return new Response($panier->getNbProduits());
+    }
+
+
     #[Route(
-        path: '{_locale}/panier/commander',
+        path: '/{_locale}/panier/commander',
         name: 'app_panier_commander',
         requirements: ['_locale' => '%app.supported_locales%']
     )]
     public function commander(PanierService $panier): Response
     {
-        $usager = new Usager();
+
         $user = $this->getUser();
-        $usager->setRoles($user->getRoles());
-        $commande = $panier->panierToCommande($usager);
+        $commande = $panier->panierToCommande($user);
         return $this->render('panier/commande.html.twig', [
-            'prenom' => $usager->getPrenom(),
-            'nom' => $usager->getNom(),
+            'prenom' => $user->getPrenom(),
+            'nom' => $user->getNom(),
             'numCmd' => $commande->getId(),
             'dateCmd' => $commande->getDateCreation()
         ]);

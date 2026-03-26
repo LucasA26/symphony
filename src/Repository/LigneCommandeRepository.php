@@ -40,4 +40,18 @@ class LigneCommandeRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
+    public function findTopVentes(int $limit = 3): array
+    {
+        return $this->createQueryBuilder('lc')
+            ->select('p AS produit, SUM(lc.quantite) AS totalVendu')
+            ->join('lc.produit', 'p')
+            ->groupBy('p.id')
+            ->orderBy('totalVendu', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

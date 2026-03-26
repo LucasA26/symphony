@@ -1,0 +1,17 @@
+<h1>Mes commandes</h1>
+
+{% if commandes is empty %}
+    <p>Vous n'avez encore passé aucune commande.</p>
+{% else %}
+    <ul>
+        {% for cmd in commandes %}
+            <li>
+                Commande n°{{ cmd.id }} — {{ cmd.dateCreation|date('d/m/Y H:i') }}
+                <a href="{{ path('app_usager_commande_detail', {
+                    '_locale': app.request.locale,
+                    'id': cmd.id
+                }) }}">Voir détail</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

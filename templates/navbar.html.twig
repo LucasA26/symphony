@@ -23,10 +23,15 @@
 			</li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ path("app_panier_index") }}">
-                    <i class="fas fa-shopping-cart"></i> Produits
+                {% set nbProduits = render(controller(
+                    'App\\Controller\\PanierController::nombreProduits'
+                )) %}
 
+                <a href="{{ path('app_panier_index', {'_locale': app.request.attributes.get('_locale')}) }}">
+                    {% trans %} panier.bouton {% endtrans%} ({{ nbProduits }})
                 </a>
+
+
             </li>
 
             <li class="nav-item dropdown">
@@ -45,6 +50,7 @@
                     {% if is_granted('ROLE_CLIENT') %}
                         <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
                         <a class="dropdown-item" href="{{ path('app_usager_index') }}">Accueil</a>
+                        <a href="{{ path('app_usager_commandes')}}"> Mes commandes </a>
                     {% endif %}
                 </div>
             </li>

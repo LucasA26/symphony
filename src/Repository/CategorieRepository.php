@@ -42,14 +42,6 @@ class CategorieRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function findAllCategories(CategorieRepository $cat): array
-    {
-        return $cat->findAll();
-    }
 
-    public function findCategorieById(CategorieRepository $cat, int $idCategorie): ?object
-    {
-        return $cat->find($idCategorie);
-    }
 
 }

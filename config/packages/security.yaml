@@ -28,6 +28,7 @@ security:
       - { path: ^/(%app.supported_locales%)/admin, roles: ROLE_ADMIN }
       - { path: app_usager_index, roles: ROLE_CLIENT }
       - { path: app_panier_commander, roles: ROLE_CLIENT }
+      - { path: ^/(%app.supported_locales%)/usager/commande, roles: ROLE_CLIENT }
 
 when@test:
     security:

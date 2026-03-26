@@ -1,0 +1,12 @@
+<h1>Détail de la commande n°{{ commande.id }}</h1>
+
+<p>Date : {{ commande.dateCreation|date('d/m/Y H:i') }}</p>
+
+<ul>
+    {% for ligne in commande.lignes %}
+        <li>
+            {{ ligne.produit.libelle }} —
+            {{ ligne.quantite }} × {{ ligne.prix }} €
+        </li>
+    {% endfor %}
+</ul>

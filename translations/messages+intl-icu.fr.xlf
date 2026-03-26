@@ -29,6 +29,10 @@
         <source>navbar.contact</source>
         <target>Contact</target>
       </trans-unit>
+      <trans-unit id="6AL5HSb" resname="panier.bouton">
+        <source>panier.bouton</source>
+        <target>__panier.bouton</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

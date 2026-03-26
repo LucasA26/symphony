@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
-use App\Service\BoutiqueService;
-use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,7 +17,7 @@ final class BoutiqueController extends AbstractController
     )]
     public function index(CategorieRepository $categorieRepository): Response
     {
-        $categories = $categorieRepository->findAllCategories($categorieRepository);
+        $categories = $categorieRepository->findAll();
         return $this->render('boutique/index.html.twig', [
             'controller_name' => 'BoutiqueController',
             'categories' => $categories,
@@ -48,7 +46,7 @@ final class BoutiqueController extends AbstractController
     )]
     public function rayon(CategorieRepository $categorieRepository, int $idCategorie, ProduitRepository $produitRepository): Response
     {
-        $categorie = $categorieRepository->findCategorieById($categorieRepository, $idCategorie);
+        $categorie = $categorieRepository->find($idCategorie);
          $produits = $produitRepository->findBy(['categorie' => $categorie]);
         return $this->render('boutique/rayon.html.twig', [
             'categorie' => $categorie,
