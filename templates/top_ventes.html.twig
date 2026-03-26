@@ -1,16 +1,13 @@
 <div class="sidebar">
     <h3>Top ventes</h3>
-
     {% if top is empty %}
         <p>Aucune vente pour le moment.</p>
     {% else %}
         <ul>
             {% for item in top %}
-                <li>
-                    {{ item.produit.libelle }}
-                    ({{ item.totalVendu }} vendus)
-                </li>
+                <li>{{ item.libelle }} - {{ item.totalVendu }} ventes</li>
             {% endfor %}
         </ul>
     {% endif %}
 </div>
+

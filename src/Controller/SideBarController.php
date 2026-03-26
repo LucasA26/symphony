@@ -11,7 +11,7 @@ class SideBarController extends AbstractController
     {
         $top = $repo->findTopVentes(3);
 
-        return $this->render('sidebar/top_ventes.html.twig', [
+        return $this->render('top_ventes.html.twig', [
             'top' => $top
         ]);
     }
