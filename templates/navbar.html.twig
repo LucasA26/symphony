@@ -27,7 +27,8 @@
                     'App\\Controller\\PanierController::nombreProduits'
                 )) %}
 
-                <a href="{{ path('app_panier_index', {'_locale': app.request.attributes.get('_locale')}) }}">
+                <a class="nav-link" href="{{ path('app_panier_index') }}">
+                    <i class="fas fa-shopping-cart"></i>
                     {% trans %} panier.bouton {% endtrans%} ({{ nbProduits }})
                 </a>
 

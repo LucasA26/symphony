@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="6AL5HSb" resname="panier.bouton">
         <source>panier.bouton</source>
-        <target>__panier.bouton</target>
+        <target>Produit(s)</target>
       </trans-unit>
     </body>
   </file>

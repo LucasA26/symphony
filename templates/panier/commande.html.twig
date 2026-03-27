@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon panier{% endblock %}
+{% block title %}Ma Commande{% endblock %}
 
 {% block body %}
 
@@ -8,6 +8,6 @@
     Prenom : {{ prenom }}
     Nom : {{ nom }}
     Numéro de commande : {{ numCmd }}
-    Date de dommande : {{ dateCmd }}
+    Date de commande : {{ dateCmd|date("m/d/Y") }}
 
 {% endblock %}

@@ -87,15 +87,20 @@ final class PanierController extends AbstractController
     )]
     public function commander(PanierService $panier): Response
     {
-
         $user = $this->getUser();
         $commande = $panier->panierToCommande($user);
-        return $this->render('panier/commande.html.twig', [
-            'prenom' => $user->getPrenom(),
-            'nom' => $user->getNom(),
-            'numCmd' => $commande->getId(),
-            'dateCmd' => $commande->getDateCreation()
-        ]);
+        if ($user == null) {
+            return $this->redirectToRoute('app_login');
+        }
+        else {
+            return $this->render('panier/commande.html.twig', [
+                'prenom' => $user->getPrenom(),
+                'nom' => $user->getNom(),
+                'numCmd' => $commande->getId(),
+                'dateCmd' => $commande->getDateCreation()
+            ]);
+        }
+
     }
 
 

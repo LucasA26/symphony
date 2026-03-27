@@ -7,6 +7,7 @@ use App\Entity\Usager;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use function PHPUnit\Framework\isEmpty;
 
 // Service pour manipuler le panier et le stocker en session
 class PanierService
@@ -123,11 +124,7 @@ class PanierService
 
 
     public function panierToCommande(Usager $usager) : ?Commande {
-        $commande = $this->getContenu();
-
-        if (empty($commande)) {
-            return null;
-        }
+        $contenu = $this->getContenu();
 
         $commande = new Commande();
         $commande->setUsager($usager);
@@ -135,12 +132,12 @@ class PanierService
         $commande->setValidation(false);
 
          $this->em->persist($commande);
-        foreach ($commande as $item) {
+        foreach ($contenu as $item) {
             $ligneCommande = new LigneCommande();
             $ligneCommande->setCommande($commande);
             $ligneCommande->setProduit($item["produit"]);
             $ligneCommande->setQuantite($item["quantite"]);
-            $ligneCommande->setPrix($item["prix"]);
+            $ligneCommande->setPrix($item["produit"]->getPrix() * $item["quantite"]);
             $this->em->persist($ligneCommande);
         }
         $this->em->flush();

@@ -13,11 +13,11 @@ final class CommandeController extends AbstractController
         name: 'app_usager_commandes',
         requirements: ['_locale' => '%app.supported_locales%']
     )]
-    public function mesCommandes(CommandeRepository $cmd): Response
+    public function mesCommandes(): Response
     {
         $usager = $this->getUser();
 
-        $commandes = $cmd->findBy(['usager' => $usager], ['dateCreation' => 'DESC']);
+        $commandes = $usager->getCommandes();
 
         return $this->render('usager/commandes.html.twig', [
             'commandes' => $commandes

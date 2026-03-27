@@ -1,12 +1,18 @@
-<h1>Détail de la commande n°{{ commande.id }}</h1>
+{% extends 'base.html.twig' %}
 
-<p>Date : {{ commande.dateCreation|date('d/m/Y H:i') }}</p>
+{% block title %}Detail de la commande{% endblock %}
 
-<ul>
-    {% for ligne in commande.lignes %}
-        <li>
-            {{ ligne.produit.libelle }} —
-            {{ ligne.quantite }} × {{ ligne.prix }} €
-        </li>
-    {% endfor %}
-</ul>
+{% block body %}
+    <h1>Détail de la commande n°{{ commande.id }}</h1>
+
+    <p>Date : {{ commande.dateCreation|date('d/m/Y H:i') }}</p>
+
+    <ul>
+        {% for ligne in commande.getLigneCommandes() %}
+            <li>
+                {{ ligne.getProduit().getLibelle() }} —
+                {{ ligne.getQuantite() }} × {{ ligne.getPrix() }} €
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
